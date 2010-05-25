@@ -146,10 +146,20 @@ void checkSensor(int sensor){
   }
 }
 
+
+void light(byte p9, byte p10, byte p11, byte p12, byte p13)
+{
+  digitalWrite(9, p9);
+  digitalWrite(10, p10);
+  digitalWrite(11, p11);
+  digitalWrite(12, p12);
+  digitalWrite(13, p13);
+}
+
 // Light up 0 to 5 lights depending on intensity of pedaling of value [0.0, 1.0]
 // Light up highest pin number in the case of the lowest intensity (because of how board was wired)
 void lightSpeedLeds(float intensity) {
-  int numToLight = intensity / intensityPerLed;
+  /*int numToLight = intensity / intensityPerLed;
   for(int i = 0; i < numLeds; i++){
     if( i < numToLight ) {
       digitalWrite(ledStartPin + numLeds - i - 1, HIGH);
@@ -157,6 +167,19 @@ void lightSpeedLeds(float intensity) {
     else {
       digitalWrite(ledStartPin + numLeds - i - 1, LOW);
     }
+  }*/
+  if (intensity > 0.95) {
+    light(HIGH, HIGH, HIGH, HIGH, HIGH);
+  } else if (intensity > 0.80){
+    light(LOW, HIGH, HIGH, HIGH, HIGH);
+  } else if (intensity > 0.60){
+    light(LOW, LOW, HIGH, HIGH, HIGH);
+  } else if (intensity > 0.40){
+    light(LOW, LOW, LOW, HIGH, HIGH);
+  } else if (intensity > 0.20){
+    light(LOW, LOW, LOW, LOW, HIGH);
+  } else {
+    light(LOW, LOW, LOW, LOW, LOW);
   }
 }
 
